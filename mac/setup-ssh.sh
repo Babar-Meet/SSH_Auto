@@ -32,9 +32,12 @@ set_sshd_option() {
 log "Enabling Remote Login (SSH)..."
 ${SUDO} systemsetup -setremotelogin on >/dev/null
 
+${SUDO} touch "${SSHD_CONFIG}"
+
 log "Ensuring password and key login stay enabled..."
 set_sshd_option "PasswordAuthentication" "yes"
 set_sshd_option "PubkeyAuthentication" "yes"
+set_sshd_option "ListenAddress" "0.0.0.0"
 
 log "Preparing ${SSH_DIR}..."
 mkdir -p "${SSH_DIR}"

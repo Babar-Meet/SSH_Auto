@@ -73,6 +73,8 @@ install_ssh_package
 
 SERVICE_NAME="$(detect_service_name)"
 
+${SUDO} touch "${SSHD_CONFIG}"
+
 log "Starting SSH service (${SERVICE_NAME})..."
 ${SUDO} systemctl start "${SERVICE_NAME}"
 
@@ -82,6 +84,7 @@ ${SUDO} systemctl enable "${SERVICE_NAME}"
 log "Ensuring password and key login stay enabled..."
 set_sshd_option "PasswordAuthentication" "yes"
 set_sshd_option "PubkeyAuthentication" "yes"
+set_sshd_option "ListenAddress" "0.0.0.0"
 
 log "Preparing ${SSH_DIR}..."
 mkdir -p "${SSH_DIR}"
